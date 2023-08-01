@@ -1,12 +1,8 @@
-const supported = HTMLElement.prototype.hasOwnProperty("popover");
+const supported = window.HTMLElement.prototype.hasOwnProperty("popover");
 if (!supported) {
-  const toggleButtons = document
-    .querySelectorAll("button[popovertargetaction='toggle']")
-    .concat(
-      document.querySelectorAll(
-        'button[popovertarget]:not([popovertargetaction="toggle"]):not([popovertargetaction="hide"])',
-      ),
-    );
+  const toggleButtons = document.querySelectorAll(
+    "button[popovertargetaction='toggle']",
+  );
 
   toggleButtons.forEach((toggleButton) =>
     toggleButton.addEventListener("click", () => {

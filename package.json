@@ -1,6 +1,6 @@
 {
   "name": "fallback-popover-api",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A fallback for the popover api",
   "main": "popover-api-fallback.js",
   "scripts": {
@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/RogierdeRuijter/popover-fallback#readme",
   "devDependencies": {
-    "jest": "^29.6.2"
+    "@testing-library/dom": "^9.3.1",
+    "jest": "^29.6.2",
+    "jsdom": "^22.1.0"
   }
 }

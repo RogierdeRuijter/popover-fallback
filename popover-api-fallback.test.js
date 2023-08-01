@@ -1,10 +1,24 @@
-// Import the JavaScript code to be tested
+const { JSDOM } = require("jsdom");
+
+// Mock the DOM environment
+const dom = new JSDOM("<!DOCTYPE html><html><body></body></html>", {
+  url: "http://localhost",
+});
+
+// Set the global object properties to emulate a browser environment
+global.window = dom.window;
+global.document = dom.window.document;
+global.HTMLElement = dom.window.HTMLElement;
+
 const { setupPopover } = require("./popover-api-fallback.js"); // Update the path if necessary
 
 describe("setupPopover function", () => {
   // Mock HTMLElement.prototype.hasOwnProperty to always return true during testing
   beforeAll(() => {
-    HTMLElement.prototype.hasOwnProperty = jest.fn(() => true);
+    Object.defineProperty(HTMLElement.prototype, "popover", {
+      value: true,
+      writable: true,
+    });
   });
 
   // Test toggle buttons
