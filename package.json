@@ -1,0 +1,11 @@
+{
+  "name": "fallback-popover-api",
+  "version": "1.0.0",
+  "description": "A fallback for the popover api",
+  "main": "popover-api-fallback.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
