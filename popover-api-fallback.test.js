@@ -1,71 +1,60 @@
 const { JSDOM } = require("jsdom");
+const { expect } = require("chai");
 
-// Mock the DOM environment
-const dom = new JSDOM("<!DOCTYPE html><html><body></body></html>", {
-  url: "http://localhost",
-});
+// Load the HTML file containing the JavaScript code
+const { window } = new JSDOM(
+  `
+  <!DOCTYPE html>
+  <html>
+    <head></head>
+    <body>
+      <button popovertarget="popover1" popovertargetaction="toggle">Toggle Button 1</button>
+      <button popovertarget="popover2" popovertargetaction="toggle">Toggle Button 2</button>
+      <button popovertarget="popover3" popovertargetaction="hide">Hide Button 1</button>
 
-// Set the global object properties to emulate a browser environment
-global.window = dom.window;
-global.document = dom.window.document;
-global.HTMLElement = dom.window.HTMLElement;
+      <div id="popover1">Popover 1</div>
+      <div id="popover2">Popover 2</div>
+      <div id="popover3" open>Popover 3</div>
+    </body>
+  </html>
+`,
+  { runScripts: "dangerously", resources: "usable" },
+);
 
-const { setupPopover } = require("./popover-api-fallback.js"); // Update the path if necessary
+const { document } = window;
 
-describe("setupPopover function", () => {
-  // Mock HTMLElement.prototype.hasOwnProperty to always return true during testing
-  beforeAll(() => {
-    Object.defineProperty(HTMLElement.prototype, "popover", {
-      value: true,
-      writable: true,
-    });
+describe("Popover functionality", function () {
+  before(function () {
+    // Execute the script in the JSDOM environment
+    const script = document.createElement("script");
+    script.src = "./popover-api-fallback.js";
+    document.head.appendChild(script);
   });
 
-  // Test toggle buttons
-  test('toggle button click should toggle "open" attribute', () => {
-    // Set up the initial DOM state
-    document.body.innerHTML = `
-      <button popovertargetaction="toggle" popovertarget="popover1"></button>
-      <div id="popover1"></div>
-    `;
-
-    // Run the setupPopover function
-    setupPopover();
-
-    // Get the toggle button and trigger a click event
-    const toggleButton = document.querySelector(
-      '[popovertargetaction="toggle"]',
+  it("should toggle the 'open' attribute on click", function () {
+    const toggleButton1 = document.querySelector(
+      "button[popovertarget='popover1']",
     );
-    toggleButton.click();
+    toggleButton1.click();
+    const popover1 = document.getElementById("popover1");
 
-    // Expect the "open" attribute to be set to an empty string
-    const popover = document.getElementById("popover1");
-    expect(popover.getAttribute("open")).toBe("");
-
-    // Trigger another click event
-    toggleButton.click();
-
-    // Expect the "open" attribute to be removed
-    expect(popover.getAttribute("open")).toBeNull();
+    console.log(document.documentElement.innerHTML);
+    expect(popover1.getAttribute("open")).to.equal("");
   });
 
-  // Test hide buttons
-  test('hide button click should remove "open" attribute', () => {
-    // Set up the initial DOM state
-    document.body.innerHTML = `
-      <button popovertargetaction="hide" popovertarget="popover2"></button>
-      <div id="popover2" open></div>
-    `;
+  it("should hide the popover on click", function () {
+    const hideButton1 = document.querySelector(
+      "button[popovertarget='popover3']",
+    );
+    const popover3 = document.getElementById("popover3");
 
-    // Run the setupPopover function
-    setupPopover();
+    // Initial state: popover3 is open
+    expect(popover3.getAttribute("open")).to.equal("");
 
-    // Get the hide button and trigger a click event
-    const hideButton = document.querySelector('[popovertargetaction="hide"]');
-    hideButton.click();
+    // Click the hide button and check the 'open' attribute
+    hideButton1.click();
 
-    // Expect the "open" attribute to be removed
-    const popover = document.getElementById("popover2");
-    expect(popover.getAttribute("open")).toBeNull();
+    // After the click, popover3 should be closed
+    expect(popover3.getAttribute("open")).to.equal(null);
   });
 });

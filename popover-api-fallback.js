@@ -1,4 +1,5 @@
 const supported = window.HTMLElement.prototype.hasOwnProperty("popover");
+console.log(supported);
 if (!supported) {
   const toggleButtons = document.querySelectorAll(
     "button[popovertargetaction='toggle']",

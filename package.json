@@ -1,11 +1,13 @@
 {
   "name": "fallback-popover-api",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "A fallback for the popover api",
   "main": "popover-api-fallback.js",
   "scripts": {
-    "test": "jest"
+    "test": "mocha popover-api-fallback.test.js"
   },
+  "files": ["fallback-popover-api.js", "fallback-popover-api.css"],
+  "exports": {"js": "fallback-popover-api.js", "css": "fallback-popover-api.css"},
   "author": "",
   "license": "ISC",
   "repository": {
@@ -18,7 +20,9 @@
   "homepage": "https://github.com/RogierdeRuijter/popover-fallback#readme",
   "devDependencies": {
     "@testing-library/dom": "^9.3.1",
+    "chai": "^4.3.7",
     "jest": "^29.6.2",
-    "jsdom": "^22.1.0"
+    "jsdom": "^22.1.0",
+    "mocha": "^10.2.0"
   }
 }
