@@ -1,13 +1,19 @@
 {
   "name": "fallback-popover-api",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "description": "A fallback for the popover api",
   "main": "index.js",
   "scripts": {
     "test": "mocha popover-api-fallback.test.js"
   },
-  "files": ["fallback-popover-api.js", "fallback-popover-api.css"],
-  "exports": {"js": "fallback-popover-api.js", "css": "fallback-popover-api.css"},
+  "files": [
+    "popover-api-fallback.js",
+    "popover-api-fallback.css"
+  ],
+  "exports": {
+    "js": "popover-api-fallback.js",
+    "css": "popover-api-fallback.css"
+  },
   "author": "",
   "license": "ISC",
   "repository": {
