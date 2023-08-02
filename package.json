@@ -1,8 +1,8 @@
 {
   "name": "fallback-popover-api",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "description": "A fallback for the popover api",
-  "main": "popover-api-fallback.js",
+  "main": "index.js",
   "scripts": {
     "test": "mocha popover-api-fallback.test.js"
   },
